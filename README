@@ -1,0 +1,46 @@
+Stanca Aurelian Rares 324CB - Tema 3 PC - Mai 2021
+
+Am luat laboratororul de HTTP si am lucrat direct pe el, asa ca
+functiile compute_post_request/compute_get_request sunt din lab.
+Am mai introdus eu compute_delete_request care e exact la fel ca
+compute_get_request doar ca in loc de get trimite delete.
+De asemenea schimb si semnaturile de la compute_X_request si
+introduc campuri si pentru tokenul JWT.
+
+Folosesc parson pentru gestionarea JSON-urilor. Toate functiile
+ajutatoare pentru JSON-uri le-am luat din documentatia parson-ului.
+
+In main citesc comanda de la tastatura cu fgets si in functie de
+ce comanda primesc execut functia corespunzatoare ei.
+
+Codul e destul de simplu:
+    - inainte sa trimit requesturi deschid conexiunea cu serverul
+    prin open_connection si verific ca socketul > 0;
+
+    - daca este nevoie construiesc JSON-ul care trebuie trimis la
+    server (register/login/add_book);
+
+    - trimit GET/POST/DELETE in functie de ce trebuie sa faca functia
+    in care ma aflu cu send_to_server si adaug si cookie-ul de login
+    sau JWT tokenul daca este nevoie;
+
+    - iau response-ul de la server cu receive_from_server si cu
+    ajutorul functiei printResponseCode printez un mesaj in
+    functie de codul primit:
+        - 2xx -> Command <commanda> went successfully. -> return 1
+        - 4xx -> Server error. -> return -1
+        - 5xx -> Client error. -> return -1
+
+    - daca functia printResponseCode returneaza -1 ies din
+    functia in care se afla deoarece inseamna ca a dat de o eroare
+
+    - extrag cookie-ul de login sau JWT token-ul daca primesc una
+    dintre astea 2;
+
+    - daca stiu ca trebuie sa primesc un JSON de la server il
+    printez (get_books/get_book);
+
+    - inchid conexiunea cu close_connection.
+
+Feedback:
+foarte usoara tema; misto sa vezi cum se trimit requesturi HTTP :)
